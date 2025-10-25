@@ -1,6 +1,7 @@
 package sk.ukf.restapi.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.util.Date;
 
@@ -12,24 +13,39 @@ public class Employee {
     @Column(name = "id")
     private int id;
 
+    @NotBlank(message = "Meno je povinné")
+    @Size(min = 2, max = 50, message = "Meno musí mať 2-50 znakov")
     @Column(name = "first_name")
     private String firstName;
 
+    @NotBlank(message = "Priezvisko je povinné")
+    @Size(min = 2, max = 50, message = "Priezvisko musí mať 2-50 znakov")
     @Column(name = "last_name")
     private String lastName;
 
+    @NotNull(message = "Dátum narodenia je povinný")
     @Column(name = "birth_date")
     private Date birthDate;
 
-    @Column(name = "email")
+    @Pattern(
+            regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
+            message = "Neplatný formát e-mailovej adresy."
+    )
+    @Column(name = "email", unique = true)
     private String email;
 
+    @Pattern(
+            regexp = "^\\+421\\d{9}$",
+            message = "Telefónne číslo musí začínať +421 a obsahovať presne 9 číslic za ním."
+    )
     @Column(name = "phone")
     private String phone;
 
+    @NotBlank(message = "Pracovná pozícia je povinná")
     @Column(name = "job_title")
     private String jobTitle;
 
+    @Positive(message = "Plat musí byť kladné číslo")
     @Column(name = "salary")
     private Float salary;
 

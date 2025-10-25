@@ -1,6 +1,10 @@
 package sk.ukf.restapi.rest;
 
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sk.ukf.restapi.dto.ApiResponse;
 import sk.ukf.restapi.entity.Employee;
 import sk.ukf.restapi.service.EmployeeService;
 
@@ -16,41 +20,57 @@ public class EmployeeRestController {
     }
 
     @GetMapping("/employees")
-    public List<Employee> findAll() {
-        return employeeService.findAll();
+    public ResponseEntity<ApiResponse<List<Employee>>> findAll() {
+        List<Employee> employees = employeeService.findAll();
+        return ResponseEntity.ok(
+                ApiResponse.success(employees, "Zoznam zamestnancov načítaný úspešne")
+        );
     }
 
     @GetMapping("/employees/{id}")
-    public Employee getEmployee(@PathVariable Integer id) {
+    public ResponseEntity<ApiResponse<Employee>> getEmployee(@PathVariable Integer id) {
         Employee employee = employeeService.findById(id);
         if (employee == null) {
-            throw new RuntimeException("Employee with id " + id + " not found");
+            throw new RuntimeException("Zamestnanec s ID " + id + " nebol nájdený");
         }
-        return employee;
+
+        return ResponseEntity.ok(
+                ApiResponse.success(employee, "Zamestnanec načítaný úspešne")
+        );
     }
 
     @PostMapping("/employees")
-    public Employee addEmployee(@RequestBody Employee employee) {
-        return employeeService.save(employee);
+    public ResponseEntity<ApiResponse<Employee>> addEmployee(@Valid @RequestBody Employee employee) {
+        Employee savedEmployee = employeeService.save(employee);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.success(savedEmployee, "Zamestnanec úspešne pridaný"));
     }
 
     @PutMapping("/employees/{id}")
-    public Employee updateEmployee(@PathVariable Integer id, @RequestBody Employee employee) {
+    public ResponseEntity<ApiResponse<Employee>> updateEmployee(@PathVariable Integer id,@Valid @RequestBody Employee employee) {
         Employee employeeRecord = employeeService.findById(id);
         if (employeeRecord == null) {
             throw new RuntimeException("Employee with id " + id + " not found");
         }
+
         employee.setId(id);
-        return employeeService.save(employee);
+        Employee updatedEmployee = employeeService.save(employee);
+
+        return ResponseEntity.ok(
+                ApiResponse.success(updatedEmployee, "Zamestnanec úspešne aktualizovaný")
+        );
     }
 
     @DeleteMapping("/employees/{id}")
-    public String deleteEmployee(@PathVariable Integer id) {
-        Employee employee = employeeService.findById(id);
-        if (employee == null) {
-            throw new RuntimeException("Employee with id " + id + " not found");
+    public ResponseEntity<ApiResponse<Void>> deleteEmployee(@PathVariable Integer id) {
+        Employee existing = employeeService.findById(id);
+        if (existing == null) {
+            throw new RuntimeException("Zamestnanec s ID " + id + " nebol nájdený");
         }
-        employeeService.delete(employee);
-        return "Deleted employee with id - " + id;
+
+        employeeService.deleteById(id);
+        return ResponseEntity.ok(
+                ApiResponse.success(null, "Zamestnanec úspešne odstránený")
+        );
     }
 }

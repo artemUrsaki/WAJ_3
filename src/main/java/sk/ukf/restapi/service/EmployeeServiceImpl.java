@@ -1,9 +1,12 @@
 package sk.ukf.restapi.service;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.Email;
 import org.springframework.stereotype.Service;
 import sk.ukf.restapi.dao.EmployeeRepository;
 import sk.ukf.restapi.entity.Employee;
+import sk.ukf.restapi.exception.EmailAlreadyExistsException;
+import sk.ukf.restapi.exception.ObjectNotFoundException;
 
 import java.util.List;
 
@@ -21,17 +24,31 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee findById(Integer id) {
-        return employeeRepository.findById(id).orElse(null);
+    public Employee findById(int id) {
+        return employeeRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Zamestnanec", id));
     }
 
     @Override
     public Employee save(Employee employee) {
+        if (employee.getId() == 0) {
+            if (employeeRepository.existsByEmail(employee.getEmail())) {
+                throw new EmailAlreadyExistsException(employee.getEmail());
+            }
+        } else {
+            Employee existingWithEmail = employeeRepository.findByEmail(employee.getEmail()).orElse(null);
+            if (existingWithEmail != null && existingWithEmail.getId() != employee.getId()) {
+                throw new EmailAlreadyExistsException(employee.getEmail());
+            }
+        }
+
         return employeeRepository.save(employee);
     }
 
     @Override
-    public void delete(Employee employee) {
-        employeeRepository.delete(employee);
+    public void deleteById(int id) {
+        if (!employeeRepository.existsById(id)) {
+            throw new ObjectNotFoundException("Zamestnanec", id);
+        }
+        employeeRepository.deleteById(id);
     }
 }
