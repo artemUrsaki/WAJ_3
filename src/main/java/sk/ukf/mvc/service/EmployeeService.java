@@ -1,6 +1,6 @@
-package sk.ukf.restapi.service;
+package sk.ukf.mvc.service;
 
-import sk.ukf.restapi.entity.Employee;
+import sk.ukf.mvc.entity.Employee;
 
 import java.util.List;
 

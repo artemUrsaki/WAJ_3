@@ -1,13 +1,13 @@
-package sk.ukf.restapi;
+package sk.ukf.mvc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RestapiApplication {
+public class MvcApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RestapiApplication.class, args);
+		SpringApplication.run(MvcApplication.class, args);
 	}
 
 }

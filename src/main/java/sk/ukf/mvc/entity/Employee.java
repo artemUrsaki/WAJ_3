@@ -1,9 +1,10 @@
-package sk.ukf.restapi.entity;
+package sk.ukf.mvc.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "employee")
@@ -25,7 +26,8 @@ public class Employee {
 
     @NotNull(message = "Dátum narodenia je povinný")
     @Column(name = "birth_date")
-    private Date birthDate;
+    @DateTimeFormat(pattern = "MM-dd-yyyy")
+    private LocalDate birthDate;
 
     @Pattern(
             regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
@@ -50,12 +52,12 @@ public class Employee {
     private Float salary;
 
     @Column(name = "full_time")
-    private boolean fullTime;
+    private byte fullTime;
 
     public Employee() {
     }
 
-    public Employee(String firstName, String lastName, Date birthDate, String email, String phone, String jobTitle, Float salary, boolean fullTime) {
+    public Employee(String firstName, String lastName, LocalDate birthDate, String email, String phone, String jobTitle, Float salary, byte fullTime) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
@@ -90,11 +92,11 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -130,11 +132,11 @@ public class Employee {
         this.salary = salary;
     }
 
-    public boolean isFullTime() {
+    public byte getFullTime() {
         return fullTime;
     }
 
-    public void setFullTime(boolean fullTime) {
+    public void setFullTime(byte fullTime) {
         this.fullTime = fullTime;
     }
 }

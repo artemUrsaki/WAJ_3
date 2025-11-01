@@ -1,43 +1,21 @@
-## 1️⃣ GET
+## 1️⃣ List
 
-### Success
-![GET Success](screenshots/get_success.png)
-
-### Exception / Not Found
-![GET Exception](screenshots/get_not_found.png)
+![Employee list](screenshots/list.png)
 
 ---
 
-## 2️⃣ POST
+## 2️⃣ Form
 
-### Success
-![POST Success](screenshots/post_success.png)
-
-### Validation
-![POST Validation Error](screenshots/post_validation.png)
-
-### Email Already Exists
-![POST Email Already Exists](screenshots/post_email_exists.png)
+![Employee form](screenshots/form.png)
 
 ---
 
-## 3️⃣ PUT
+## 3️⃣ View
 
-### Success
-![PUT Success](screenshots/put_success.png)
-
-### Validation
-![PUT Validation Error](screenshots/put_validation.png)
-
-### Not Found
-![PUT Not Found](screenshots/put_not_found.png)
+![Employee view](screenshots/view.png)
 
 ---
 
 ## 4️⃣ DELETE
 
-### Success
-![DELETE Success](screenshots/delete_success.png)
-
-### Not Found
-![DELETE Not_Found](screenshots/delete_not_found.png)
+![Employee delete](screenshots/delete.png)
