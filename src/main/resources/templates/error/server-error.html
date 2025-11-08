@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="sk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>404 – Stránka nenájdená</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        body {
+            background-color: #f2f7ff;
+            padding-top: 30px;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h2 {
+            color: #1b4aa0;
+            font-weight: 700;
+        }
+
+        .error-code {
+            font-size: 5rem;
+            font-weight: 800;
+            color: #1b4aa0;
+            line-height: 1;
+        }
+
+        .error-message {
+            font-size: 1.25rem;
+            color: #0b265a;
+        }
+
+        .btn-secondary {
+            background-color: #b8cff6;
+            border-color: #b8cff6;
+            color: #0b265a;
+        }
+
+        .btn-secondary:hover {
+            background-color: #9bbaf2;
+            border-color: #9bbaf2;
+            color: #0b265a;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h2>Stránka nenájdená</h2>
+    </div>
+
+    <div class="card">
+        <div class="card-body text-center py-5">
+            <div class="mb-3">
+                <i class="fas fa-compass fa-3x" style="color:#1b4aa0;"></i>
+            </div>
+            <div class="error-code mb-2">500</div>
+            <p class="error-message mb-4" th:text="${error}" />
+
+            <div class="d-flex justify-content-center">
+                <a th:href="@{/employees}" class="btn btn-secondary">
+                    <i class="fas fa-users"></i> Zoznam zamestnancov
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+</body>
+</html>

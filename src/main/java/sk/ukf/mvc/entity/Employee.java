@@ -14,21 +14,23 @@ public class Employee {
     @Column(name = "id")
     private int id;
 
-    @NotBlank(message = "Meno je povinné")
-    @Size(min = 2, max = 50, message = "Meno musí mať 2-50 znakov")
+    @NotBlank(message = "Meno nesmie byť prázdne.")
+    @Size(min = 2, max = 64, message = "Meno musí mať aspoň 2 a najviac 64 znakov.")
     @Column(name = "first_name")
     private String firstName;
 
-    @NotBlank(message = "Priezvisko je povinné")
-    @Size(min = 2, max = 50, message = "Priezvisko musí mať 2-50 znakov")
+    @NotBlank(message = "Priezvisko nesmie byť prázdne.")
+    @Size(min = 2, max = 64, message = "Priezvisko musí mať aspoň 2 a najviac 64 znakov.")
     @Column(name = "last_name")
     private String lastName;
 
-    @NotNull(message = "Dátum narodenia je povinný")
+    @NotNull(message = "Dátum narodenia nesmie byť prázdny.")
+    @Past(message = "Dátum narodenia musí byť v minulosti.")
     @Column(name = "birth_date")
-    @DateTimeFormat(pattern = "MM-dd-yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
+    @NotBlank(message = "Email nesmie byť prázdny")
     @Pattern(
             regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
             message = "Neplatný formát e-mailovej adresy."
@@ -36,6 +38,7 @@ public class Employee {
     @Column(name = "email", unique = true)
     private String email;
 
+    @NotBlank(message = "Telefónne číslo nesmie byť prázdne.")
     @Pattern(
             regexp = "^\\+421\\d{9}$",
             message = "Telefónne číslo musí začínať +421 a obsahovať presne 9 číslic za ním."
@@ -43,14 +46,15 @@ public class Employee {
     @Column(name = "phone")
     private String phone;
 
-    @NotBlank(message = "Pracovná pozícia je povinná")
+    @NotBlank(message = "Pracovná pozícia nesmie byť prázdna.")
     @Column(name = "job_title")
     private String jobTitle;
 
-    @Positive(message = "Plat musí byť kladné číslo")
+    @Min(value = 0, message = "Plat nemôže byť záporný.")
     @Column(name = "salary")
     private Float salary;
 
+    @NotNull(message = "Typ úväzku nesmie byť prázdna.")
     @Column(name = "full_time")
     private byte fullTime;
 

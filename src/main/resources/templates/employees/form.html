@@ -75,7 +75,6 @@
             border-radius: 6px;
         }
 
-        /* Nice spacing for radio buttons */
         .employment-group div {
             margin-bottom: 6px;
         }
@@ -87,7 +86,7 @@
 <div class="container">
 
     <div class="header">
-        <h2>Pridať nového zamestnanca</h2>
+        <h2 th:text="${employee.id} != 0 ? 'Upraviť existujúceho zamestnanca' : 'Pridať nového zamestnanca'"></h2>
     </div>
 
     <form th:action="@{/employees}" th:object="${employee}" method="post">
@@ -95,16 +94,20 @@
             <div class="card-body">
                 <h5 class="card-title">Informácie o zamestnanci</h5>
 
+                <input type="hidden" th:field="*{id}">
+
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="firstName" class="form-label">Meno</label>
                         <input type="text" class="form-control" id="firstName" th:field="*{firstName}"
                                placeholder="Zadajte Vaše meno" required>
+                        <div class="text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
                     </div>
                     <div class="col-md-6">
                         <label for="lastName" class="form-label">Priezvisko</label>
                         <input type="text" class="form-control" id="lastName" th:field="*{lastName}"
                                placeholder="Zadajte Vaše priezvisko" required>
+                        <div class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
                     </div>
                 </div>
 
@@ -112,6 +115,7 @@
                     <div class="col-md-6">
                         <label for="birthDate" class="form-label">Dátum narodenia</label>
                         <input type="date" class="form-control" id="birthDate" th:field="*{birthDate}" required>
+                        <div class="text-danger" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></div>
                     </div>
                 </div>
 
@@ -120,11 +124,13 @@
                         <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="email" th:field="*{email}"
                                placeholder="Vložte Vašu emailovú adresu" required>
+                        <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                     </div>
                     <div class="col-md-6">
                         <label for="phone" class="form-label">Telefón</label>
                         <input type="tel" class="form-control" id="phone" th:field="*{phone}"
                                placeholder="Zadajte svoje telefónne číslo">
+                        <div class="text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
                     </div>
                 </div>
 
@@ -137,12 +143,14 @@
                                     th:text="${jobTitle}">
                             </option>
                         </select>
+                        <div class="text-danger" th:if="${#fields.hasErrors('jobTitle')}" th:errors="*{jobTitle}"></div>
                     </div>
 
                     <div class="col-md-6">
                         <label for="salary" class="form-label">Plat</label>
                         <input type="number" step="0.01" class="form-control" id="salary"
                                th:field="*{salary}" placeholder="Zadajte plat" required>
+                        <div class="text-danger" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></div>
                     </div>
                 </div>
 
@@ -151,24 +159,16 @@
                         <label class="form-label">Typ úväzku</label>
 
                         <div class="employment-group">
-                            <div>
-                                <input type="radio" id="employmentType0" name="employmentType" value="0" th:field="*{fullTime}">
-                                <label for="employmentType0">Plný úväzok</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="employmentType1" name="employmentType" value="1" th:field="*{fullTime}">
-                                <label for="employmentType1">Čiastočný úväzok</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="employmentType2" name="employmentType" value="2" th:field="*{fullTime}">
-                                <label for="employmentType2">Dohoda</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="employmentType3" name="employmentType" value="3" th:field="*{fullTime}">
-                                <label for="employmentType3">Stážista/Praktikant</label>
+                            <div th:each="type, iStat  : ${employmentTypes}">
+                                <input type="radio"
+                                       th:id="${iStat.index}"
+                                       th:value="${iStat.index}"
+                                       th:field="*{fullTime}">
+                                <label th:for="${iStat.index}" th:text="${type}"></label>
                             </div>
                         </div>
 
+                        <div class="text-danger" th:if="${#fields.hasErrors('fullTime')}" th:errors="*{fullTime}"></div>
                     </div>
                 </div>
             </div>
@@ -178,9 +178,8 @@
                     <i class="fas fa-arrow-left"></i> Späť na zoznam
                 </a>
 
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-user-plus"></i> Pridať zamestnanca
-                </button>
+                <button type="submit" class="btn btn-primary"
+                        th:text="${employee.id} != 0 ? 'Upraviť zamestnanca' : 'Pridať zamestnanca'"></button>
             </div>
         </div>
     </form>

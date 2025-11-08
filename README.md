@@ -1,21 +1,15 @@
-## 1️⃣ List
+## 1️⃣ Validatoin
 
-![Employee list](screenshots/list.png)
+![Form Validation](screenshots/validation.png)
 
 ---
 
 ## 2️⃣ Form
 
-![Employee form](screenshots/form.png)
+![Not Found View](screenshots/404.png)
 
 ---
 
 ## 3️⃣ View
 
-![Employee view](screenshots/view.png)
-
----
-
-## 4️⃣ DELETE
-
-![Employee delete](screenshots/delete.png)
+![Server Error View](screenshots/500.png)
